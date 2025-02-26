@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--HARRISON KAY, index.html, DueDate 2/26/25-->
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!--  Add to home screen -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="mobile-web-app-capable" content="yes">ar-style" content="black">
+ 
+  <title >The Big Weather</title>
+
+  
+  <!-- App Icon -->
+  <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+  <link rel="apple-touch-icon" href="images/apple-touch-icon-iphone60x60.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="images/apple-touch-icon-ipad-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-iphone-retina-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="images/apple-touch-icon-ipad-retina-152x152.png">
+
+
+
+
+
+
+  <!-- Bootstrap  -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  
+  <!--Bootstrap Icons-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  </head>
+
+<body class="bg-dark">
+  <div  class="text-center justify-content-center align-items-center">
+
+    <!-- Header ------>
+    <header class="bg-light text-center p-3 justify-content-center align-items-center">
+      <h1  style="font-style: oblique; font-weight: bolder; font-family:Verdana, Geneva, Tahoma, sans-serif;" class="p-4 text-u " aria-label="Title Reading The Big News">THE BIG WEATHER</h1>
+      <h5 class="text-center pb-4" style="font-family:monospace;">Alerting you of Weather Anomolies Since Last Week</h5>
+    </header>
+
+    <!----><!--main card--> 
+    <div class=" d-flex flex-column align-items-center justify-content-center mt-5 vh-100">
+      <div class=" col-md-6 col-12 row align-items-center" >
+
+        <!-- Card with Weather Icon and strDescription -->
+        <div class=" font-weight rounded w-100 w-md-25 col-md-6  p-3 bg-light rounded">
+            <h2 class="text-dark p-1">Current Conditions:</h2>
+
+            <!--Icon-->
+            <div class="display-1"  aria-label="Weather Icon Displaying an Image of Current Weather in your area">
+              <!-- Default icon  -->
+              <i id="iconWeather" style="text-shadow: 3px 2px 3px black;" ></i> 
+            
+        
+            </div>
+
+            <!--strDescription-->
+            <h2 id="intWeatherCode" aria-label="Current Weather In yor Area">Loading Weather...</h2>
+            <!--Location-->
+            <h2 id="strLocation" class=" text-uppercase" aria-label="A line stating Location, City and State">City:</h2>
+            <hr class="border border-black border-1 mt-3 opacity-100">
+            
+            <!--Temp and Icon-->
+            <div style="  font-size: xx-large;" >
+            <i id="iconTemp" style="text-shadow: 2px 2px 2px black;" class="outlined-icon" ></i>
+            <span id="intTemp" aria-label="Current outside Temperature" style=" font-weight: bold;">Null</span>
+            </div>
+
+            <!--High and Low Temp and Icon-->
+            <div class="" style=" font-size: small;  font-style: italic;  ">
+            <i id="iconLow"  class="bi bi-graph-down text-primary"></i>
+            <span id="intMinTemp" aria-label="Low Temperature for the Day With"style=" font-weight: bold;">Low: --°F</span>
+            <br>
+            <i id="iconHigh" class="bi bi-graph-up text-danger "></i>
+            <span id="intMaxTemp" aria-label="High Temperature for the Day"style=" font-weight: bold;">High: --°F</span>
+            </div>
+
+            <!--Weather Statistics Data and Icon-->
+            <hr class="border border-black border-1 opacity-100">
+            <i id="iconHumid" style="text-shadow: .5px .5px 2px rgb(0, 10, 70);"></i>
+            <span id="intHumid" aria-label="Humidity Percent"style=" font-weight: bold;">Humidity: --%</span>
+            <br>
+            <i id="iconRain" style="text-shadow: .5px .5px 2px rgb(0, 17, 167);"></i>
+            <span id="intRainProb" aria-label="Chance of Rain"style=" font-weight: bold;">Chance of Rain: --%</span>
+            <br>
+            <i id="iconCloud" style="text-shadow: .5px .5px 2px black;"></i>
+            <span id="intCloud" aria-label="Cloud Coverage Percentage"style=" font-weight: bold;">Cloud Coverage: --%</span>
+            
+            <hr class="border border-black border-1 mt-5 opacity-100">
+            
+            <div class="text-center mt-4">
+                <a href="#" style="text-shadow: .5px .5px 0px black;" aria-label="A blue hyer link that, when clicked, enables manual entry of coordinates " id="manualInputLink" class="text-info">🌐 Enter Coordinates Manually</a>
+        
+                <!-- Hidden form -->
+                <div id="manualInputForm" class="mt-3 d-none">
+                  <input type="number" id="manualLatitude" class="form-control mb-2" placeholder="Enter Latitude" step="any">
+                  <input type="number" id="manualLongitude" class="form-control mb-2" placeholder="Enter Longitude" step="any">
+                  <button class="btn btn-primary" onclick="submitManualCoordinates()">Get Weather</button>
+                </div>
+            
+            </div>
+        
+        </div>
+
+
+        
+
+          
+          
+        </div>
+
+      </div>
+
+      
+
+    </div>
+  </div>
+
+  <!-- Bootstrap script -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+
+  <script>
+    //Gets the user's geolocation and fetch weather + location data
+    function getLatLong() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+
+            // Calls the div weather and location functions
+            getWeather(latitude, longitude);
+            getLocation(latitude, longitude);
+          },
+          (error) => {
+            console.error("Geolocation Error:", error);
+            alert("Unable to retrieve your location. Please enter coordinates manually.");
+          }
+        );
+      } else {
+        alert("Geolocation is not supported by this browser.");
+      }
+    }
+
+    document.getElementById('manualInputLink').addEventListener('click', (e) => {
+     
+      const form = document.getElementById('manualInputForm');
+      form.classList.toggle('d-none'); // Show or hide the form
+
+    });
+
+
+
+    // Use manually entered coordinates
+    function submitManualCoordinates() {
+
+      const latitude = document.getElementById('manualLatitude').value;
+      const longitude = document.getElementById('manualLongitude').value;
+
+      if (isValidCoordinate(latitude) && isValidCoordinate(longitude)) {
+         getWeather(latitude, longitude);
+         getLocation(latitude, longitude);
+
+        // Hide form after submission
+        document.getElementById('manualInputForm').classList.add('d-none');
+        
+      } else {
+        alert("Please enter valid latitude and longitude values.");
+      }
+    }
+
+    // Coordinate validation function
+    function isValidCoordinate(value) {
+        if (isNaN(value)) {
+            return false; // Not a number
+        }
+
+        if (value <= -90 || value >= 90) {
+            return false; // Outside valid range
+        }
+
+        return true; // Valid coordinate
+        }
+
+
+    //Convert celsius to fahrenheit
+    function CtoF(Ctemp) {
+      return (Ctemp * 9 / 5) + 32;
+    }
+
+    //fetchs weather data using open-meteo API
+    async function getWeather(latitude, longitude) {
+      const apiWeatherURL = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,is_day,precipitation,rain,showers,snowfall,weather_code,cloud_cover,wind_speed_10m,wind_direction_10m&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=auto`;
+
+      try {
+        const response = await fetch(apiWeatherURL);
+        if (!response.ok) throw new Error("Failed to fetch weather data.");
+
+        const data = await response.json();
+
+        // Extract data
+        const weatherCode = data.current.weather_code;
+        const intTempC = data.current.temperature_2m;
+        const intMinTempC = data.daily.temperature_2m_min[0];
+        const intMaxTempC = data.daily.temperature_2m_max[0];
+        const intHumid = data.current.relative_humidity_2m;
+        const intRainProb = data.daily.precipitation_probability_max[0];
+        const intCloud = data.current.cloud_cover;
+
+        // Convert temperatures to Fahrenheit
+        const intTempF = Math.round(CtoF(intTempC));
+        const intMinTempF = Math.round(CtoF(intMinTempC));
+        const intMaxTempF = Math.round(CtoF(intMaxTempC));
+
+        // Initialize the Icons/Supplimentary variables for later assignment
+        const weatherData = getWeatherData(weatherCode);
+        const iconTemp = getTempIcon(intTempC)
+        const iconHumid = getHumidIcon(intHumid)
+        const iconRain = getRainIcon(intRainProb)
+        const iconCloud = getCloudIcon(intCloud)
+        
+
+       //Assign Data to HTML
+
+       //Top Weather Icon and data Assignment
+        document.getElementById('iconWeather').className =` ${weatherData.iconClass}`;
+        document.getElementById('iconWeather').style.color = ` ${weatherData.iconColor}`;
+        document.getElementById('intWeatherCode').innerHTML = `${weatherData.strDescription}`;
+
+        //Temperautre Data and Icon Assignment
+        document.getElementById('iconTemp').style.color = `${iconTemp.iconColor}`;
+        document.getElementById('iconTemp').className = `${iconTemp.iconClass}`;
+        document.getElementById('intTemp').innerHTML = ` ${intTempF}℉ | ${intTempC}℃`;
+        document.getElementById('intMinTemp').innerHTML = ` Low: ${intMinTempF}℉ | ${intMinTempC}℃`;
+        document.getElementById('intMaxTemp').innerHTML = ` High: ${intMaxTempF}℉ | ${intMaxTempC}℃`;
+        
+        //Humidity Data and Icon Assignment
+        document.getElementById('iconHumid').style.color = `${iconHumid.iconColor}`;
+        document.getElementById('iconHumid').className = `${iconHumid.iconClass}`;
+        document.getElementById('intHumid').innerHTML = ` Humidity: ${intHumid}%`;
+        
+
+        // Rain Probability Data and Icon Assignment
+        document.getElementById('iconRain').style.color = `${iconRain.iconColor}`;
+        document.getElementById('iconRain').className = `${iconRain.iconClass}`;
+        document.getElementById('intRainProb').innerHTML = ` Chance of Rain: ${intRainProb}%`;
+        
+        // Cloud Coverage Assignment
+        document.getElementById('iconCloud').style.color = `${iconCloud.iconColor}`;
+        document.getElementById('iconCloud').className = `${iconCloud.iconClass}`;
+        document.getElementById('intCloud').innerHTML = ` Cloud Coverage: ${intCloud}%`;
+
+      } catch (error) {
+        console.error("Weather API Error:", error);
+        alert("Unable to fetch weather data.");
+      }
+    }
+
+    // Reverse geocode coordinates using Google Maps API
+    async function getLocation(latitude, longitude) {
+      const apiGeoURL = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyAXRlFpnKdj-Fhu99OZf0ooCdsI3OhGpoI`;
+
+      try {
+        const response = await fetch(apiGeoURL);
+        if (!response.ok) throw new Error("Failed to fetch location data.");
+    // Error Handelinging ^^^
+
+        const data = await response.json();
+    
+    //Validation of data
+        if (data.status === "OK" && data.results.length > 0) {
+          const addressComponents = data.results[0].address_components;
+
+          // Extract city and state
+          let city = "Unknown City";
+          let state = "Unknown State";
+
+          for (const component of addressComponents) {
+            if (component.types.includes("locality")) city = component.long_name;
+            if (component.types.includes("administrative_area_level_1")) state = component.short_name;
+          }
+
+          // Update location display
+          document.getElementById('strLocation').innerHTML = `📍 ${city}, ${state}`;
+        } else {
+
+          console.error("No location found:", data.status);
+
+        }
+      } catch (error) {
+        console.error("Location API Error:", error);
+        alert("Unable to fetch location data, Please Enter Longitude and Latitude Manually.");
+      }
+    }
+
+
+//Functions for Dynamically Assigning Icons to elements 
+
+  // Temperature Icon Selection
+  function getTempIcon(intTempC){
+    let iconClass
+    let iconColor
+
+
+    if(intTempC <=0){
+      iconClass = "bi-snow"
+      iconColor = "#a5f5ff" //light blue
+    }
+    else if(intTempC <5 && intTempC > 0){
+      iconClass = "bi bi-thermometer-low"
+      iconColor = "#4887EF"//Cornflower Blue
+    }
+     else if (intTempC < 24 && intTempC >= 5) {
+      iconClass ="bi bi-thermometer-half"
+      iconColor ="#28EF47" //Green
+    }
+    else if (intTempC >= 24) {
+      iconClass ="bi bi-thermometer-high"
+      iconColor ="#f16624"//Flamingo Orange
+    }
+    return{iconClass, iconColor}
+  }
+
+  //Humidity Icon Selection
+  function getHumidIcon(intHumid){
+    let iconClass
+    let iconColor
+
+
+    if(intHumid <= 30){
+      iconClass = "bi bi-droplet"
+      iconColor = "#1899ff"
+    } 
+    else if(intHumid < 60 && intHumid > 30 ){
+    iconClass = "bi bi-droplet-half"
+    iconColor = "#1899ff"
+    }
+     else if (intHumid >= 60) {
+      iconClass ="bi bi-droplet-fill"
+      iconColor = "#1899ff"
+    }
+    return{iconClass, iconColor}
+  }
+
+  //Rain Icon Selection
+  function getRainIcon(intRainProb){
+    let iconClass
+    let iconColor
+
+
+    if(intRainProb <= 30){
+      iconClass = "bi bi-cloud-drizzle"
+      iconColor = "#000000"
+    } 
+    else if(intRainProb < 60 && intHumid > 30 ){
+    iconClass = "bi bi-cloud-rain"
+    iconColor = "#24455F"
+    }
+     else if (intRainProb >= 60) {
+      iconClass ="bi bi-cloud-rain-heavy"
+      iconColor = "#0A69B3"
+    }
+    return{iconClass, iconColor}
+  };
+
+  function getCloudIcon(intCloud){
+    let iconClass
+    let iconColor
+
+
+    if(intCloud <= 20){
+      iconClass = "bi bi-sun-fill"
+      iconColor = "#FFD700"
+    }
+    else if(intCloud <= 45 && intCloud > 20 ){
+    iconClass = "bi bi-cloudy"
+    iconColor = "#B0BEC5"
+    }
+    else if(intCloud < 60 && intCloud > 30 ){
+    iconClass = "bi bi-cloudy-fill"
+    iconColor = "#B0BEC5"
+    }
+     else if (intCloud >= 60) {
+      iconClass = "bi bi-clouds-fill"
+      iconColor = "#B0BEC5"
+    }
+    return{iconClass, iconColor}
+  };
+
+
+
+
+    // Map weather codes to emojis and strDescriptions
+    function getWeatherData(code) {
+
+    //Utilized a switch statement because the weather-codes are
+    //already paired a relationship between the numbers and strDescriptions 
+    //So it is easier
+    // 
+    // 
+    // 
+
+      let iconClass;
+      let strDescription;
+      let iconColor
+
+      switch (code) {
+      case 0:
+      case 1:
+        iconClass = "bi-brightness-high-fill"; // Sunny
+        strDescription = "Clear Sky";
+        iconColor = "#FFD700"; // Gold-Yellow
+        break;
+
+      case 2:
+        iconClass = "bi-cloud-sun-fill"; // Partly Cloudy
+        strDescription = "Partly Cloudy";
+        iconColor = "#FFC107"; // Orange-Yellow
+        break;
+
+      case 3:
+        iconClass = "bi-cloud-fill"; // Cloudy
+        strDescription = "Cloudy";
+        iconColor = "#B0BEC5"; // Light Gray
+        break;
+
+      case 45:
+      case 48:
+        iconClass = "bi-cloud-fog-fill"; // Foggy
+        strDescription = "Foggy";
+        iconColor = "#90A4AE"; // Blueish-Gray
+        break;
+
+      case 51:
+      case 53:
+      case 55:
+        iconClass = "bi-cloud-drizzle-fill"; // Drizzle
+        strDescription = "Drizzle";
+        iconColor = "#4FC3F7"; // Light Blue
+        break;
+
+      case 61:
+      case 63:
+      case 65:
+        iconClass = "bi-cloud-rain-fill"; // Rain
+        strDescription = "Rain";
+        iconColor = "#03A9F4"; // Blue
+        break;
+
+      case 71:
+      case 73:
+      case 75:
+        iconClass = "bi-cloud-snow-fill"; // Snow
+        strDescription = "Snow";
+        iconColor = "#81D4FA"; // Light Cyan
+        break;
+
+      case 80:
+      case 81:
+      case 82:
+        iconClass = "bi-cloud-rain-heavy-fill"; 
+        strDescription = "Rain Showers";
+        iconColor = "#0288D1"; // Darker Blue
+        break;
+
+      case 95:
+        iconClass = "bi-lightning-fill"; // Thunderstorm
+        strDescription = "Thunderstorm";
+        iconColor = "#FFCA28"; // Bright Yellow
+        break;
+
+      case 96:
+      case 99:
+        iconClass = "bi-cloud-lightning-rain-fill"; // Severe Thunderstorm
+        strDescription = "Severe Thunderstorm";
+        iconColor = "#FF5722"; // A more vibrant Red-Orange
+        break;
+
+      default:
+        iconClass = "bi-globe"; // Unknown 
+        strDescription = "Unknown Condition";
+        iconColor = "#9E9E9E"; // Grayish default
+  }
+
+  return { iconClass, strDescription, iconColor };
+};
+
+window.onload = function () {
+  getLatLong(); // Automatically fetches weather when the page loads
+};
+
+
+  </script>
+
+  <!--USAGE OF AI (NOT IN ORDER),
+
+USE #1, I asked Grok AI (its not my fav, my first time trying it) to give
+me a list of good colors for the icons . It did pick out good colors.
+ (I know it wasn't neccessary but I wanted to see what it could pull off).
+
+
+USE #2, It Generated The Image for home screen because the assignment suggested it,
+and it seemed like a neat Idea. I used DALL-E for that.
+
+
+USE #3, I Used AI to explain some of the documentation, ESPECIALLY GOOGLE'S. It helped me
+mitigate a lot of redundancy and helped me pinpoint what parts would be useful.
+(Mostly just because I forgot how to get an API Key)-->
+
+</body>
+</html>
