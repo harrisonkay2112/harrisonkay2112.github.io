@@ -9,7 +9,12 @@
   <!--  Add to home screen -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="mobile-web-app-capable" content="yes">ar-style" content="black">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#333333">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
  
   <title >The Big Weather</title>
 
@@ -232,12 +237,15 @@
 
        //Top Weather Icon and data Assignment
         document.getElementById('iconWeather').className =` ${weatherData.iconClass}`;
+        document.querySelector('iconWeather').alt = `${weatherData.altText}`
+
         document.getElementById('iconWeather').style.color = ` ${weatherData.iconColor}`;
         document.getElementById('intWeatherCode').innerHTML = `${weatherData.strDescription}`;
 
         //Temperautre Data and Icon Assignment
         document.getElementById('iconTemp').style.color = `${iconTemp.iconColor}`;
         document.getElementById('iconTemp').className = `${iconTemp.iconClass}`;
+        document.getElementById('iconTemp').alt = `${iconTemp.altText}`;
         document.getElementById('intTemp').innerHTML = ` ${intTempF}℉ | ${intTempC}℃`;
         document.getElementById('intMinTemp').innerHTML = ` Low: ${intMinTempF}℉ | ${intMinTempC}℃`;
         document.getElementById('intMaxTemp').innerHTML = ` High: ${intMaxTempF}℉ | ${intMaxTempC}℃`;
@@ -308,25 +316,30 @@
   function getTempIcon(intTempC){
     let iconClass
     let iconColor
+    let altText
 
 
     if(intTempC <=0){
       iconClass = "bi-snow"
       iconColor = "#a5f5ff" //light blue
+      altText ='A Light blue snow flake'
     }
     else if(intTempC <5 && intTempC > 0){
       iconClass = "bi bi-thermometer-low"
-      iconColor = "#4887EF"//Cornflower Blue
+      iconColor = "#4887EF"
+      altText="A blue low settling thermometer"
     }
      else if (intTempC < 24 && intTempC >= 5) {
       iconClass ="bi bi-thermometer-half"
       iconColor ="#28EF47" //Green
+      altText="A Green middle settling thermometer"
     }
     else if (intTempC >= 24) {
       iconClass ="bi bi-thermometer-high"
       iconColor ="#f16624"//Flamingo Orange
+      altText="A Orange High settling thermometer"
     }
-    return{iconClass, iconColor}
+    return{iconClass, iconColor, altText}
   }
 
   //Humidity Icon Selection
@@ -374,6 +387,7 @@
   function getCloudIcon(intCloud){
     let iconClass
     let iconColor
+    
 
 
     if(intCloud <= 20){
@@ -410,7 +424,8 @@
 
       let iconClass;
       let strDescription;
-      let iconColor
+      let iconColor;
+      let altText;
 
       switch (code) {
       case 0:
@@ -418,18 +433,21 @@
         iconClass = "bi-brightness-high-fill"; // Sunny
         strDescription = "Clear Sky";
         iconColor = "#FFD700"; // Gold-Yellow
+        altText = "A Bright Sun is Shown"
         break;
 
       case 2:
         iconClass = "bi-cloud-sun-fill"; // Partly Cloudy
         strDescription = "Partly Cloudy";
         iconColor = "#FFC107"; // Orange-Yellow
+        altText="a Bright sun behind a cloud"
         break;
 
       case 3:
         iconClass = "bi-cloud-fill"; // Cloudy
         strDescription = "Cloudy";
         iconColor = "#B0BEC5"; // Light Gray
+        altText="A light Gray Cloud"
         break;
 
       case 45:
@@ -437,6 +455,7 @@
         iconClass = "bi-cloud-fog-fill"; // Foggy
         strDescription = "Foggy";
         iconColor = "#90A4AE"; // Blueish-Gray
+        altText ='A blue-grey cloud with fog'
         break;
 
       case 51:
@@ -445,6 +464,7 @@
         iconClass = "bi-cloud-drizzle-fill"; // Drizzle
         strDescription = "Drizzle";
         iconColor = "#4FC3F7"; // Light Blue
+        altTest ="A light blue cloud with small drops of rain "
         break;
 
       case 61:
@@ -453,6 +473,7 @@
         iconClass = "bi-cloud-rain-fill"; // Rain
         strDescription = "Rain";
         iconColor = "#03A9F4"; // Blue
+        altText ='A blue cloud with moderate drops of rain'
         break;
 
       case 71:
@@ -461,6 +482,7 @@
         iconClass = "bi-cloud-snow-fill"; // Snow
         strDescription = "Snow";
         iconColor = "#81D4FA"; // Light Cyan
+        altText ='A light blue cloud with snow'
         break;
 
       case 80:
@@ -469,12 +491,14 @@
         iconClass = "bi-cloud-rain-heavy-fill"; 
         strDescription = "Rain Showers";
         iconColor = "#0288D1"; // Darker Blue
+        altText ='A dark blue cloud with Heavy Rain'
         break;
 
       case 95:
         iconClass = "bi-lightning-fill"; // Thunderstorm
         strDescription = "Thunderstorm";
         iconColor = "#FFCA28"; // Bright Yellow
+        altText ='A bright yellow cloud with Lightning'
         break;
 
       case 96:
@@ -482,15 +506,17 @@
         iconClass = "bi-cloud-lightning-rain-fill"; // Severe Thunderstorm
         strDescription = "Severe Thunderstorm";
         iconColor = "#FF5722"; // A more vibrant Red-Orange
+        altText ='An Orange cloud with lightning'
         break;
 
       default:
         iconClass = "bi-globe"; // Unknown 
         strDescription = "Unknown Condition";
         iconColor = "#9E9E9E"; // Grayish default
+        altText ='A grey wireframe globe'
   }
 
-  return { iconClass, strDescription, iconColor };
+  return { iconClass, strDescription, iconColor, altText };
 };
 
 window.onload = function () {
